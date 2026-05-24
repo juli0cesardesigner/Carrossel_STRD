@@ -1,0 +1,15 @@
+{
+  "name": "loop-auditor",
+  "description": "Auditor especializado em analisar falhas de execução, loops infinitos e problemas de engenharia de prompt para destravar o processo criativo e técnico.",
+  "version": "1.0.0",
+  "author": "Antigravity",
+  "keywords": [
+    "auditor",
+    "loop",
+    "debug",
+    "prompt engineering",
+    "technical error",
+    "ai stuck"
+  ],
+  "dependencies": []
+}

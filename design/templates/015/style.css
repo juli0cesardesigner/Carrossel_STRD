@@ -1,0 +1,617 @@
+@import url('./config.css');
+
+/* --------------------------------------------------
+   Design System Variables
+   ================================================== */
+:root {
+  /* Dimensions (4:5 Aspect Ratio) */
+  --slide-width: 432px;
+  --slide-height: 540px;
+  --slide-border-radius: 20px;
+
+  /* Semantic Layout Colors */
+  --bg-page: #00071b;
+  --bg-slide: var(--color-navy);
+  --text-primary: #ffffff;
+}
+
+/* --------------------------------------------------
+   Reset and Base Styles
+   -------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Slide Grid Wrapper */
+.carousel-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--slide-width), 1fr));
+  gap: 30px;
+  max-width: 1450px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+/* Base Slide Container */
+.slide {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background-color: var(--bg-slide);
+  position: relative;
+  overflow: hidden;
+}
+
+#slide-1, #slide-2, #slide-4 {
+  background-color: #001d6f;
+}
+
+#slide-3, #slide-5, #slide-7 {
+  background-color: #f2f2f2;
+}
+
+.slide > * {
+  border-radius: inherit;
+}
+
+/* --------------------------------------------------
+   Background Layers
+   -------------------------------------------------- */
+.layer-bottom-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.layer-middle-saturation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #999999;
+  mix-blend-mode: saturation;
+}
+
+.layer-top-multiply {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #ff5100;
+  mix-blend-mode: multiply;
+}
+
+.glass-rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 144px; /* 360px na escala original (360 * 0.4) */
+  height: 100%;
+  background-color: rgba(0, 29, 111, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 2;
+}
+
+/* --------------------------------------------------
+   Layer 3: Text Content
+   -------------------------------------------------- */
+.layer-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 38px 36px 38px;
+}
+
+/* --------------------------------------------------
+   Text Layer Typography & Layouts
+   -------------------------------------------------- */
+.slide-header {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.top-logo {
+  height: 12px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.top-info-text {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.6rem;
+  color: #ffffff;
+  mix-blend-mode: difference;
+  opacity: 0.80;
+  letter-spacing: 0.5px;
+}
+
+#slide-7 .header-left {
+  display: none;
+}
+
+#slide-7 .slide-header {
+  justify-content: center;
+}
+
+#slide-7 .slide-number {
+  margin-left: 0;
+}
+
+.slide-number {
+  margin-left: auto;
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0;
+  color: #ffffff;
+  mix-blend-mode: difference;
+  opacity: 0.80;
+  letter-spacing: 0.5px;
+}
+
+.slide-number::after {
+  content: var(--brand-name);
+  font-size: 0.6rem;
+}
+
+.slide-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px 0;
+  z-index: 10;
+}
+
+/* --------------------------------------------------
+   Swipe Box (Arraste para o lado)
+   -------------------------------------------------- */
+.swipe-box {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 356px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='890' height='60' viewBox='0 0 890 60'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23ffb700' stop-opacity='0'/%3E%3Cstop offset='100%25' stop-color='%23ffb700' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1.5' y='1.5' width='887' height='57' rx='28.5' fill='none' stroke='url(%23grad)' stroke-width='3'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 32px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.swipe-circle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.2px solid #ffb700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.swipe-circle svg {
+  width: 12px;
+  height: 12px;
+}
+
+.swipe-box::after {
+  content: "ARRASTE PARA O LADO";
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-size: 7.2px;
+  background: linear-gradient(to right, rgba(255, 183, 0, 0.1) 0%, rgba(255, 183, 0, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+#slide-7 .swipe-box {
+  display: none;
+}
+
+/* --------------------------------------------------
+   Color Overrides for Light Background Slides (3, 5, 6, 7)
+   -------------------------------------------------- */
+#slide-3 .slide-number,
+#slide-5 .slide-number,
+#slide-6 .slide-number,
+#slide-7 .slide-number {
+  color: #001d6f;
+  mix-blend-mode: normal;
+}
+
+#slide-3 .swipe-box,
+#slide-5 .swipe-box,
+#slide-6 .swipe-box,
+#slide-7 .swipe-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='890' height='60' viewBox='0 0 890 60'%3E%3Cdefs%3E%3ClinearGradient id='grad_blue' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23001d6f' stop-opacity='0'/%3E%3Cstop offset='100%25' stop-color='%23001d6f' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1.5' y='1.5' width='887' height='57' rx='28.5' fill='none' stroke='url(%23grad_blue)' stroke-width='3'/%3E%3C/svg%3E");
+}
+
+#slide-3 .swipe-box::after,
+#slide-5 .swipe-box::after,
+#slide-6 .swipe-box::after,
+#slide-7 .swipe-box::after {
+  background: linear-gradient(to right, rgba(0, 29, 111, 0.1) 0%, rgba(0, 29, 111, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+#slide-3 .swipe-circle,
+#slide-5 .swipe-circle,
+#slide-6 .swipe-circle,
+#slide-7 .swipe-circle {
+  border-color: #001d6f;
+}
+
+#slide-3 .swipe-circle svg,
+#slide-5 .swipe-circle svg,
+#slide-7 .swipe-circle svg {
+  stroke: #001d6f;
+}
+
+#slide-3 .top-info-text,
+#slide-5 .top-info-text,
+#slide-7 .top-info-text {
+  color: #001d6f;
+  mix-blend-mode: normal;
+}
+
+#slide-3 .top-logo,
+#slide-5 .top-logo,
+#slide-7 .top-logo {
+  /* Aproximando #001d6f usando CSS filters a partir do branco/preto original */
+  filter: brightness(0) invert(10%) sepia(60%) saturate(5000%) hue-rotate(220deg) brightness(80%) contrast(110%);
+}
+
+/* --------------------------------------------------
+   Typography Utility Classes
+   -------------------------------------------------- */
+.font-primary {
+  font-family: var(--font-family-primary) !important;
+}
+
+/* Controle de tamanho exclusivo para a fonte do Slide 1 (txt2) */
+#slide-1 .font-accent {
+  font-size: 2.5rem !important; 
+}
+
+/* Controle de tamanho para a fonte de TODOS os outros slides (txt3, txt5, etc) */
+.font-accent {
+  font-family: var(--font-family-accent) !important;
+  font-size: 1.8rem !important; 
+  line-height: 0.8 !important;
+  font-weight: 400 !important;
+}
+
+.title-large {
+  font-family: var(--font-family-primary);
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.desc {
+  font-family: var(--font-family-primary);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.text-orange {
+  color: var(--color-orange-primary);
+}
+
+/* Colors for text on light backgrounds */
+#slide-3 .title-large,
+#slide-5 .title-large,
+#slide-7 .title-large {
+  color: #001d6f;
+}
+
+#slide-3 .desc,
+#slide-5 .desc,
+#slide-6 .desc,
+#slide-7 .desc {
+  color: #555555;
+}
+
+#slide-7 .text-orange {
+  color: var(--color-orange-primary);
+}
+
+/* Alinhamento exclusivo do slide 1 */
+#slide-1 h1.title-large,
+#slide-1 p.desc {
+  text-align: left;
+}
+
+/* Cores específicas de texto para os slides 1, 2, 4 e 6 */
+#slide-1 .title-large:not(.text-orange), #slide-1 .desc:not(.text-orange),
+#slide-2 .title-large:not(.text-orange), #slide-2 .desc:not(.text-orange),
+#slide-4 .title-large:not(.text-orange), #slide-4 .desc:not(.text-orange) {
+  color: #e2e2e2;
+}
+
+/* Blocos de Imagem e Limitadores */
+.image-box-glass {
+  width: 328px; /* 820px * 0.4 */
+  height: 352px; /* 880px * 0.4 */
+  margin: 0 auto 16px auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image-box-glass img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.limit-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Caixas de Proteção (Alturas e Margens controladas no config.css) */
+.txt4-wrapper,
+.txt8-wrapper,
+.txt10-wrapper,
+.txt11-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#slide-2 h1.title-large {
+  font-size: 3.25rem; /* Inicial grande para destaque */
+  line-height: 1.05;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* --------------------------------------------------
+   Efeitos txt7 (Slide 4) - Gradiente, Desfoque e Peso
+   -------------------------------------------------- */
+#slide-4 .desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+#slide-4 .txt7-line {
+  display: block;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  width: 100%;
+}
+
+/* Meio (linhas 4, 5, 6) - 100% nítido e mais peso */
+#slide-4 .txt7-line-4,
+#slide-4 .txt7-line-5,
+#slide-4 .txt7-line-6 {
+  opacity: 1;
+  filter: blur(0px);
+  font-weight: 900 !important;
+}
+
+/* Transição (linhas 3 e 7) */
+#slide-4 .txt7-line-3,
+#slide-4 .txt7-line-7 {
+  opacity: 0.75;
+  filter: blur(0.5px);
+  font-weight: 700 !important;
+}
+
+/* Transição (linhas 2 e 8) */
+#slide-4 .txt7-line-2,
+#slide-4 .txt7-line-8 {
+  opacity: 0.55;
+  filter: blur(1px);
+  font-weight: 400 !important;
+}
+
+/* Topo e Bottom (linhas 1 e 9) - 30% opaco, desfoque sutil e menos peso */
+#slide-4 .txt7-line-1,
+#slide-4 .txt7-line-9 {
+  opacity: 0.3;
+  filter: blur(1.5px);
+  font-weight: 300 !important;
+}
+
+/* --------------------------------------------------
+   Efeitos txt10 (Slide 6) - Caixa Glass atrás do texto
+   -------------------------------------------------- */
+#slide-6 h1.title-large {
+  display: inline-block;
+  position: relative;
+  z-index: 1; /* Garante que o texto fique na frente do retângulo */
+}
+
+#slide-6 h1.title-large::before {
+  content: '';
+  position: absolute;
+  top: 10%; /* Empurra 10% do topo */
+  left: 10%; /* Empurra 10% da esquerda */
+  width: 80%; /* Reduz a largura em 20% no total */
+  height: 80%; /* Reduz a altura em 20% no total */
+  background-color: rgba(0, 29, 111, 0.4); /* #001d6f com transparência */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 29, 111, 0.6);
+  border-radius: 8px; /* Arredondamento suave no vidro */
+  z-index: -1; /* Joga para trás do texto */
+}
+
+/* --------------------------------------------------
+   Força elementos do Slide 6 a serem Brancos
+   -------------------------------------------------- */
+#slide-6 .top-info-text,
+#slide-6 .slide-number {
+  mix-blend-mode: normal !important;
+  color: #ffffff !important;
+}
+
+#slide-6 .top-logo {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* O filtro abaixo transforma o laranja da seta e da caixa em branco puro, mantendo a transparência original do gradiente */
+#slide-6 .swipe-box {
+  filter: grayscale(100%) brightness(10) !important;
+}
+
+/* --------------------------------------------------
+   Efeitos txt11 (Slide 7) - Logo e Cor
+   -------------------------------------------------- */
+#slide-7 .bottom-logo {
+  height: 32px;
+  width: auto;
+  margin-top: 24px;
+  /* Aplica a cor #001d6f usando CSS filters a partir do preto puro gerado pelo brightness(0) */
+  filter: brightness(0) invert(10%) sepia(60%) saturate(5000%) hue-rotate(220deg) brightness(80%) contrast(110%);
+}
+
+/* --------------------------------------------------
+   Layer 4: Textures (Top overlays)
+   -------------------------------------------------- */
+.texture-3-b, .texture-3-m, .texture-3-t {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.texture-3-b {
+  background-image: url('./texturas/texture_3_B.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.50 * var(--texture-3-group-opacity));
+  z-index: 20;
+}
+
+.texture-3-m {
+  background-image: url('./texturas/texture_3_M.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.30 * var(--texture-3-group-opacity));
+  z-index: 21;
+}
+
+.texture-3-t {
+  background-image: url('./texturas/texture_3_T.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.30 * var(--texture-3-group-opacity));
+  z-index: 22;
+}
+
+.layer-texture-middle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 23;
+  background-image: url('./texturas/texture_2.webp');
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.50;
+  pointer-events: none;
+}
+
+.layer-texture-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 24;
+  background-image: url('./texturas/texture_1.webp');
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 1.00;
+  pointer-events: none;
+}

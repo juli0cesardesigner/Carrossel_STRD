@@ -1,0 +1,426 @@
+@import url('./config.css');
+
+/* --------------------------------------------------
+   Design System Variables
+   ================================================== */
+:root {
+  /* Dimensions (4:5 Aspect Ratio) */
+  --slide-width: 432px;
+  --slide-height: 540px;
+  --slide-border-radius: 20px;
+
+  /* Semantic Layout Colors */
+  --bg-page: #00071b;
+  --bg-slide: var(--color-navy);
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+
+  /* Texture Settings */
+  --texture-3-group-opacity: 0.40;
+  --texture-bleed: 110%;
+}
+
+/* --------------------------------------------------
+   Reset and Base Styles
+   -------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Slide Grid Wrapper */
+.carousel-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--slide-width), 1fr));
+  gap: 30px;
+  max-width: 1450px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+/* Base Slide Container */
+.slide {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background-color: var(--bg-slide);
+  position: relative;
+  overflow: hidden;
+}
+
+.slide > * {
+  border-radius: inherit;
+}
+
+/* --------------------------------------------------
+   Layer 1: Images
+   -------------------------------------------------- */
+.layer-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------
+   Layer 2: Color / Gradient Overlays
+   -------------------------------------------------- */
+.layer-color-solid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #383838;
+  mix-blend-mode: multiply;
+  opacity: 1.0;
+}
+
+.layer-color-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(0deg, #000000 30%, #ffffff 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+/* --------------------------------------------------
+   Layer 3: Text Content
+   -------------------------------------------------- */
+.layer-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 38px 36px 38px;
+}
+
+/* --------------------------------------------------
+   Layer 4: Textures (Top overlays)
+   -------------------------------------------------- */
+.texture-3-b, .texture-3-m, .texture-3-t {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.texture-3-b {
+  background-image: url('./texturas/texture_3_B.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.50 * var(--texture-3-group-opacity));
+  z-index: 4;
+}
+
+.texture-3-m {
+  background-image: url('./texturas/texture_3_M.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.30 * var(--texture-3-group-opacity));
+  z-index: 5;
+}
+
+.texture-3-t {
+  background-image: url('./texturas/texture_3_T.webp');
+  mix-blend-mode: overlay;
+  opacity: calc(0.30 * var(--texture-3-group-opacity));
+  z-index: 6;
+}
+
+.layer-texture-middle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  background-image: url('./texturas/texture_2.webp');
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.50;
+  pointer-events: none;
+}
+
+.layer-texture-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  background-image: url('./texturas/texture_1.webp');
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 1.00;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------
+   Text Layer Typography & Layouts
+   -------------------------------------------------- */
+.slide-header {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.top-logo {
+  height: 12px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.top-info-text {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.6rem;
+  color: #ffffff;
+  mix-blend-mode: difference;
+  opacity: 0.80;
+  letter-spacing: 0.5px;
+}
+
+.final-slide-logo {
+  height: 30px;
+  width: auto;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+#slide-10 .header-left {
+  display: none;
+}
+
+
+
+.slide-number {
+  margin-left: auto;
+  font-family: var(--font-family-primary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.slide-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px 0;
+  z-index: 10;
+}
+
+/* Typography Utility Classes */
+.font-primary {
+  font-family: var(--font-family-primary) !important;
+}
+
+.font-accent {
+  font-family: var(--font-family-accent) !important;
+  font-size: 2rem; /* Aumenta a legibilidade da fonte cursiva North Ramsey */
+  line-height: 1.2;
+}
+
+/* Typography styles */
+.title-large {
+  font-family: var(--font-family-primary);
+  font-weight: 900;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-family: var(--font-family-primary);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.cover-tagline {
+  font-family: var(--font-family-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-blue-light);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+/* Text Highlights */
+.text-orange {
+  color: var(--color-orange-primary);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-orange-primary) 0%, var(--color-red-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.accent-ramsey {
+  font-family: var(--font-family-accent);
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: var(--color-orange-primary);
+  display: inline-block;
+  transform: rotate(-3deg) translateY(4px);
+  margin: 0 4px;
+}
+
+
+
+/* --------------------------------------------------
+   Progress Bar
+   -------------------------------------------------- */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--color-orange-primary);
+  z-index: 2;
+}
+
+/* --------------------------------------------------
+   Slide Brand Handle (@brand)
+   -------------------------------------------------- */
+.slide-brand-tag {
+  position: absolute;
+  bottom: 28px; /* Y = 1280px na escala 1350px (70px do bottom na escala original, 28px na de preview) */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.6rem;
+  color: #ffffff;
+  mix-blend-mode: difference;
+  opacity: 0.80;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------
+   SLIDES 1, 3, 5, 7, 9 - Regras Específicas (Textos Principais)
+   -------------------------------------------------- */
+#slide-1, #slide-3, #slide-5, #slide-7, #slide-9 {
+  /* Controle ÚNICO da margem do texto principal (escala de preview) */
+  --txt1-margin: 30px;
+}
+
+#slide-1 .slide-content,
+#slide-3 .slide-content,
+#slide-5 .slide-content,
+#slide-7 .slide-content,
+#slide-9 .slide-content {
+  /* Garante que o conteúdo fique apenas na metade inferior (não ultrapasse o meio) */
+  margin-top: auto; 
+  height: 50%;
+  flex-grow: 0;
+  justify-content: center; /* Centraliza verticalmente no espaço inferior */
+}
+
+#slide-1 h1.title-large,
+#slide-3 h1.title-large,
+#slide-5 h1.title-large,
+#slide-7 h1.title-large,
+#slide-9 h1.title-large {
+  text-transform: uppercase;
+  text-align: center;
+  /* O calc() subtrai automaticamente os 38px de padding que o slide já tem nativamente */
+  margin-left: calc(var(--txt1-margin) - 38px);
+  margin-right: calc(var(--txt1-margin) - 38px);
+  word-break: break-word; /* Quebra linha se a palavra for muito longa e tocar na margem */
+}
+
+/* --------------------------------------------------
+   SLIDES 2, 4, 6, 8, 10 - Regras Específicas
+   -------------------------------------------------- */
+#slide-2 .slide-content,
+#slide-4 .slide-content,
+#slide-6 .slide-content,
+#slide-8 .slide-content,
+#slide-10 .slide-content {
+  /* Restringe todos para não ultrapassarem o meio do slide */
+  margin-top: auto; 
+  height: 50%;
+  flex-grow: 0;
+  justify-content: center;
+}
+
+/* Alinhamento à Esquerda e Controle de Espaçamento para Textos de Suporte */
+#slide-2 p.desc,
+#slide-4 p.desc,
+#slide-6 p.desc,
+#slide-8 p.desc {
+  text-align: left;
+  /* CONTROLE DE ESPAÇAMENTO: Altere este valor para afastar ou aproximar as linhas dos txts de suporte */
+  line-height: 0.6; 
+}
+
+/* Slide 10: Centralizado e Controle de Espaçamento */
+#slide-10 h1.title-large,
+#slide-10 p.desc {
+  text-align: center;
+  /* CONTROLE DE ESPAÇAMENTO: Altere este valor para afastar ou aproximar as linhas do txt 13 */
+  line-height: 0.6; 
+}
+
+#slide-1 p.desc {
+  text-align: center;
+}

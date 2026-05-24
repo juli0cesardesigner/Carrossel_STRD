@@ -1,0 +1,12 @@
+@import url('../../shared/brand-config.css');
+
+/* ==================================================
+   CONFIGURAÇÃO DO TEMPLATE (OVERRIDES LOCAIS)
+   ================================================== */
+
+/* --------------------------------------------------
+   Injeção Automática do @brand nos Slides
+   -------------------------------------------------- */
+.slide-brand-tag::after {
+  content: var(--brand-name);
+}

@@ -1,0 +1,25 @@
+{
+    "client": "estradão",
+    "project_name": "Estradão Viagens",
+    "identity": {
+        "brand_name": "Estradão Viagens",
+        "niche": "Turismo de aventura, trekking, camping, montanhismo, rapel, trilhas, travessias, montanhas, cachoeiras, praias, desertos, serras",
+        "tone_of_voice": "Criativo, Inspirador",
+        "target_audience": ""
+    },
+    "benchmarks": {
+        "copy": {
+            "source": "examples/txts",
+            "file": ""
+        },
+        "prompts": {
+            "source": "examples/prompts",
+            "file": ""
+        }
+    },
+    "visual_prompts_rules": {
+        "forbidden_terms": [],
+        "allowed_terms_override": [],
+        "style": ""
+    }
+}

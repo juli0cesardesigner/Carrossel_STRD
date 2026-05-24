@@ -1,0 +1,64 @@
+/* ==================================================
+   CONFIGURAÇÃO DE MARCA GLOBAL DO CLIENTE
+   ================================================== */
+
+:root {
+  /* Marca (Texto único do slide) */
+  --brand-name: "@estradaoviagens";
+  
+  /* Informação do Topo */
+  --top-info: "TREKKING / RAPEL /  CAMPING / TURISMO";
+
+  /* Cores do Cliente */
+  --color-orange-primary: #ff5100;
+  --color-blue-estradao: #0044ff;
+  --color-blue-light: #3fa9f5;
+  --color-red-orange: #ff3100;
+  --color-navy: #001d6f;
+
+  /* Fontes do Cliente (Famílias) */
+  --font-family-primary: 'Abrade', sans-serif;
+  --font-family-accent: 'North Ramsey', cursive;
+}
+
+/* --------------------------------------------------
+   Setup de Fontes Locais (Arquivos OTF)
+   -------------------------------------------------- */
+@font-face {
+  font-family: 'Abrade';
+  src: url('./fonts/Abrade.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Abrade';
+  src: url('./fonts/Abrade Light Italic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Abrade';
+  src: url('./fonts/Abrade Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Abrade';
+  src: url('./fonts/Abrade Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Abrade';
+  src: url('./fonts/Abrade Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'North Ramsey';
+  src: url('./fonts/north-ramsey.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+

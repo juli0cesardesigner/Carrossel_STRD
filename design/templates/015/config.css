@@ -1,0 +1,31 @@
+@import url('../../shared/brand-config.css');
+
+:root {
+  /* Texturas (Controle de Opacidade e Bleed) */
+  --texture-3-group-opacity: 0.40;
+  --texture-bleed: 110%;
+}
+
+/* --------------------------------------------------
+   CONTROLES INDIVIDUAIS DAS CAIXAS DE PROTEÇÃO
+   Ajuste a altura (height) e as margens de respiro
+   -------------------------------------------------- */
+.txt4-wrapper {
+  height: 260px;
+  margin: 24px 0;
+}
+
+.txt8-wrapper {
+  height: 200px;
+  margin: 24px 0;
+}
+
+.txt10-wrapper {
+  height: 260px;
+  margin: 24px 0;
+}
+
+.txt11-wrapper {
+  height: 160px;
+  margin: 24px 0;
+}

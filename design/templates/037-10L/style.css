@@ -1,0 +1,573 @@
+@import url('./config.css');
+
+/* --------------------------------------------------
+   Design System Variables
+   ================================================== */
+:root {
+  /* Dimensions (4:5 Aspect Ratio) */
+  --slide-width: 432px;
+  --slide-height: 540px;
+  --slide-border-radius: 20px;
+
+  /* Semantic Layout Colors */
+  --bg-page: #00071b;
+  --bg-slide: var(--color-navy);
+  --text-primary: #ffffff;
+
+  /* Lógica de Invasão */
+  --invade-width: 50px;
+}
+
+/* --------------------------------------------------
+   Reset and Base Styles
+   -------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Slide Grid Wrapper */
+.carousel-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--slide-width), 1fr));
+  gap: 30px;
+  max-width: 1450px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+/* Base Slide Container */
+.slide {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background-color: var(--bg-slide);
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.slide > * {
+  border-radius: inherit;
+}
+
+/* --------------------------------------------------
+   Background Layers
+   -------------------------------------------------- */
+.layer-bottom-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+  opacity: 1.0;
+}
+
+.layer-middle-saturation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #999999;
+  mix-blend-mode: saturation;
+}
+
+.layer-top-multiply {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #ff5100;
+  mix-blend-mode: multiply;
+}
+
+
+
+.gradient-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0.8; /* Grupo com 80% de opacidade */
+  mix-blend-mode: normal; /* Modo mesclagem normal */
+}
+
+.layer-color-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 20%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0) 80%, rgba(0, 0, 0, 1) 100%);
+  mix-blend-mode: multiply; /* Multiplicar */
+  opacity: 1.0; /* 100% opacidade */
+}
+
+
+
+.glass-rectangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 144px; /* 360px na escala original (360 * 0.4) */
+  height: 100%;
+  background-color: rgba(0, 29, 111, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 2;
+}
+
+/* --------------------------------------------------
+   Layer 3: Text Content
+   -------------------------------------------------- */
+.layer-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 38px 36px 38px;
+}
+
+/* --------------------------------------------------
+   Text Layer Typography & Layouts
+   -------------------------------------------------- */
+.slide-header {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.top-logo {
+  height: 12px;
+  width: auto;
+  filter: var(--ui-filter);
+  opacity: 0.85;
+}
+
+.top-info-text {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.6rem;
+  color: var(--ui-color);
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+#slide-10 .swipe-box {
+  display: none;
+}
+
+.slide-number {
+  margin-left: auto;
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0;
+  color: var(--ui-color);
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+.slide-number::after {
+  content: var(--brand-name);
+  font-size: 0.6rem;
+}
+
+.slide-content {
+  margin-top: auto;
+  height: 50%;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+/* Slides 2 a 9: conteúdo absoluto, alinhado à esquerda */
+#slide-2 .slide-content,
+#slide-3 .slide-content,
+#slide-4 .slide-content,
+#slide-5 .slide-content,
+#slide-6 .slide-content,
+#slide-7 .slide-content,
+#slide-8 .slide-content,
+#slide-9 .slide-content {
+  position: absolute;
+  top: 68px; /* Limpa o header (28px top + 12px logo + 28px respiro) */
+  bottom: 68px; /* Limpa o swipe-box (28px bottom + 24px box + 16px respiro) */
+  left: 38px;
+  right: var(--invade-width); /* Margem de segurança = invasão do próximo slide */
+  height: auto;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Slide 1 e 10: conteúdo absoluto, centralizado */
+#slide-1 .slide-content,
+#slide-10 .slide-content {
+  position: absolute;
+  top: 68px;
+  bottom: 68px;
+  left: 38px;
+  right: 38px;
+  height: auto;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------
+   Swipe Box (Arraste para o lado)
+   -------------------------------------------------- */
+.swipe-box {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 356px;
+  height: 24px;
+  background-image: var(--ui-svg-bg);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 32px;
+  box-sizing: border-box;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.swipe-brand {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-size: 7.2px;
+  color: var(--ui-color);
+  opacity: 0.85;
+  margin-right: auto;
+  margin-left: 16px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+}
+
+.swipe-brand strong {
+  font-weight: 900;
+}
+
+.swipe-circle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.2px solid var(--ui-color);
+  color: var(--ui-color); /* Herdado pelo svg currentColor */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.swipe-circle svg {
+  width: 12px;
+  height: 12px;
+}
+
+.swipe-box::after {
+  content: "ARRASTE PARA O LADO";
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-size: 7.2px;
+  background: var(--ui-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+/* (swipe-box do slide-7 já oculto acima) */
+
+
+
+/* --------------------------------------------------
+   Typography Utility Classes
+   -------------------------------------------------- */
+.font-primary {
+  font-family: var(--font-family-primary) !important;
+}
+
+/* Controle de tamanho para a fonte de suporte (txt3, txt5, etc) */
+.font-accent {
+  font-family: var(--font-family-accent) !important;
+  font-size: 3.2rem !important; /* Equivalente a 96pt na escala original */
+  line-height: 0.6 !important;
+  font-weight: 400 !important;
+}
+
+.title-large {
+  font-family: var(--font-family-primary);
+  font-weight: 900;
+  font-size: 3.2rem; /* Equivalente a 96pt na escala original */
+  line-height: 0.8;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-align: left; /* Alinhamento padrão à esquerda */
+  text-transform: uppercase;
+}
+
+.desc {
+  font-family: var(--font-family-primary);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  text-align: left; /* Alinhamento padrão à esquerda */
+  text-transform: uppercase;
+}
+
+/* Centralização exclusiva para o slide 1 e slide 10 */
+#slide-1 .title-large,
+#slide-1 .desc,
+#slide-10 .title-large {
+  text-align: center;
+}
+
+.text-orange {
+  color: var(--color-orange-primary);
+}
+
+
+
+/* --------------------------------------------------
+   Cores e Fundos por Slide
+   -------------------------------------------------- */
+
+/* Variáveis de UI (#f2f2f2) - Slides 1, 2, 4, 6, 8 */
+#slide-1, #slide-2, #slide-4, #slide-6, #slide-8 {
+  --ui-color: #f2f2f2;
+  --ui-glow: rgba(242, 242, 242, 0.7);
+  --ui-glow-dim: rgba(242, 242, 242, 0.35);
+  --ui-glow-border: rgba(242, 242, 242, 0.15);
+  --ui-gradient: linear-gradient(to right, rgba(242, 242, 242, 0.1) 0%, rgba(242, 242, 242, 1) 100%);
+  --ui-svg-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='890' height='60' viewBox='0 0 890 60'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23f2f2f2' stop-opacity='0'/%3E%3Cstop offset='100%25' stop-color='%23f2f2f2' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1.5' y='1.5' width='887' height='57' rx='28.5' fill='none' stroke='url(%23grad)' stroke-width='3'/%3E%3C/svg%3E");
+  --ui-filter: brightness(0) invert(98%);
+}
+
+/* Variáveis de UI (#0044ff) - Slides 3, 5, 7, 9 */
+#slide-3, #slide-5, #slide-7, #slide-9 {
+  --ui-color: #0044ff;
+  --ui-glow: rgba(0, 68, 255, 0.7);
+  --ui-glow-dim: rgba(0, 68, 255, 0.35);
+  --ui-glow-border: rgba(0, 68, 255, 0.15);
+  --ui-gradient: linear-gradient(to right, rgba(0, 68, 255, 0.1) 0%, rgba(0, 68, 255, 1) 100%);
+  --ui-svg-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='890' height='60' viewBox='0 0 890 60'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%230044ff' stop-opacity='0'/%3E%3Cstop offset='100%25' stop-color='%230044ff' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1.5' y='1.5' width='887' height='57' rx='28.5' fill='none' stroke='url(%23grad)' stroke-width='3'/%3E%3C/svg%3E");
+  --ui-filter: brightness(0) invert(18%) sepia(91%) saturate(3501%) hue-rotate(224deg) brightness(101%);
+}
+
+/* --------------------------------------------------
+   Invasão do Próximo Slide (Barra lateral direita em formato de seta)
+   -------------------------------------------------- */
+.slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--invade-width); /* Usa a variável raiz */
+  background-color: var(--invade-color, transparent);
+  clip-path: polygon(100% 0, 100% 100%, 0 50%); /* 0px topo, 0px base, largura máxima no meio */
+  z-index: 1; /* Fica acima do fundo, mas abaixo das texturas e gradientes (z-index 2+) */
+}
+
+/* Cores do slide SEGUINTE */
+#slide-1 { --invade-color: #0044ff; } /* bg do slide 2 */
+#slide-2 { --invade-color: #f2f2f2; } /* bg do slide 3 */
+#slide-3 { --invade-color: #0044ff; } /* bg do slide 4 */
+#slide-4 { --invade-color: #f2f2f2; } /* bg do slide 5 */
+#slide-5 { --invade-color: #0044ff; } /* bg do slide 6 */
+#slide-6 { --invade-color: #f2f2f2; } /* bg do slide 7 */
+#slide-7 { --invade-color: #0044ff; } /* bg do slide 8 */
+#slide-8 { --invade-color: #f2f2f2; } /* bg do slide 9 */
+#slide-9 { --invade-color: #ff5100; } /* bg do slide 10 */
+
+/* Fundos sólidos (slides 2–10) */
+#slide-2, #slide-4, #slide-6, #slide-8 { background-color: #0044ff; }
+#slide-3, #slide-5, #slide-7, #slide-9 { background-color: #f2f2f2; }
+#slide-10 { background-color: #ff5100; }
+
+/* Slide 1 — imagem de fundo */
+#slide-1 .title-large { color: #f2f2f2; }
+
+/* Slides azuis (2, 4, 6, 8) — texto claro */
+#slide-2 .title-large, #slide-4 .title-large, #slide-6 .title-large, #slide-8 .title-large { color: #f2f2f2; }
+#slide-2 .desc,        #slide-4 .desc,        #slide-6 .desc,        #slide-8 .desc        { color: #f2f2f2; }
+
+/* Slides laranja/claros internos (3, 5, 7, 9) */
+#slide-3 .title-large, #slide-5 .title-large, #slide-7 .title-large, #slide-9 .title-large { color: #ff5100; }
+#slide-3 .desc,        #slide-5 .desc,        #slide-7 .desc,        #slide-9 .desc        { color: #001d6f; }
+
+/* Slide 10 — fechamento laranja */
+#slide-10 .title-large {
+  color: #f2f2f2;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-align: center;
+}
+
+#slide-10 .last-slide-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+#slide-10 .last-logo {
+  height: 24px;
+  width: auto;
+  opacity: 0.9;
+  filter: brightness(0) invert(98%); /* Torna o logo branco/claro no fundo laranja, sem glow */
+}
+
+#slide-10 .last-top-info {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 0.65rem;
+  color: #f2f2f2;
+  opacity: 0.85;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: none; /* Remove efeito de glow */
+}
+
+#slide-10 .last-slide-footer {
+  font-family: var(--font-family-primary);
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: #f2f2f2;
+  opacity: 0.85;
+  margin-top: 36px;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  text-shadow: none; /* Remove efeito de glow */
+}
+
+#slide-10 .last-slide-footer strong {
+  font-weight: 900;
+}
+
+
+
+/* Blocos de Imagem e Limitadores */
+.image-box-glass {
+  width: 328px; /* 820px * 0.4 */
+  height: 352px; /* 880px * 0.4 */
+  margin: 0 auto 16px auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image-box-glass img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.limit-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Caixas de Proteção (Alturas e Margens controladas no config.css) */
+.txt4-wrapper,
+.txt8-wrapper,
+.txt10-wrapper,
+.txt11-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+
+
+
+/* --------------------------------------------------
+   Layer 4: Texture Overlay (UP)
+   -------------------------------------------------- */
+.layer-texture-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Acima de todos os elementos (textos, headers, etc) */
+  background-image: url('./texturas/texture_UP.jpg');
+  background-size: var(--texture-bleed) var(--texture-bleed);
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: var(--texture-up-opacity, 0.40);
+  pointer-events: none;
+}

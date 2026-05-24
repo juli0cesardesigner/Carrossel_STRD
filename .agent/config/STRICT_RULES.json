@@ -1,0 +1,40 @@
+{
+    "operational_rules": {
+        "no_excuses": true,
+        "automatic_validation_loops": true,
+        "stop_on_fail": true
+    },
+    "global_constraints": {
+        "visual_prompts": {
+            "min_words": 200,
+            "layers": 5,
+            "layer_separator": "\n\n",
+            "forbidden_generator_flags": [
+                "--ar",
+                "--stylize",
+                "--v"
+            ],
+            "allowed_terms_override": []
+        },
+        "copy_text": {
+            "template_source": "knowledge/BANCO DE TEMPLATES.md",
+            "strict_fields": true,
+            "max_words_enforcement": "hard_limit",
+            "max_chars_enforcement": {
+                "mode": "hard_limit",
+                "soft_margin_percent": 30,
+                "soft_margin_min_chars": 5
+            },
+            "format": "txtX - [content]",
+            "prohibited": [
+                "### Slide X:",
+                "Slide X:"
+            ],
+            "prohibited_regex": [
+                "Slide\\s*\\d+\\s*:?.*$",
+                "Eixo\\s*Selecionado\\s*:.*$"
+            ]
+        }
+    },
+    "active_client_profile": ".agent/config/clients/client.json"
+}

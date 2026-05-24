@@ -1,0 +1,7 @@
+@import url('../../shared/brand-config.css');
+
+:root {
+  /* Texturas (Controle de Opacidade e Bleed) */
+  --texture-up-opacity: 0.5;
+  --texture-bleed: 110%;
+}
